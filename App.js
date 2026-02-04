@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Modal, TextInput } from 'react-native';
 import {createStaticNavigation, useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
   return <Navigation/>;
@@ -25,11 +26,20 @@ function doubt(){
     <View>
         <Text>Add your doubt here:</Text>
         <TextInput></TextInput>
-        {/* <Button></Button> */}
-     
+        <Button
+          
+        />
     </View>
   )
 }
+
+const storeData = async (value) => {
+  try{
+    await AsyncStorage.setItem('my-key', value);
+  } catch(e){
+
+  }
+};
 
 const rootStack = createNativeStackNavigator({
   initialRouteName: 'Start',
