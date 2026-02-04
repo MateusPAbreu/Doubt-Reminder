@@ -1,29 +1,45 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Modal, TextInput } from 'react-native';
+import {createStaticNavigation, useNavigation} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function App() {
+  return <Navigation/>;
+}
+
+function start(){
+const navigation = useNavigation()
+
   return (
     <View style={styles.addDoubt}>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Doubt')}>
         <Text style={styles.buttonText}>+</Text>
+        {/* <Link screen="Doubt">Add doubt</Link> */}
       </TouchableOpacity>
     </View>
-
-    
   );
 }
 
 function doubt(){
   return(
     <View>
-      <Modal isVisible={false}>
         <Text>Add your doubt here:</Text>
         <TextInput></TextInput>
-        <Button/>
-      </Modal>
+        {/* <Button></Button> */}
+     
     </View>
   )
 }
+
+const rootStack = createNativeStackNavigator({
+  initialRouteName: 'Start',
+  screens: {
+    Start: start,
+    Doubt: doubt,
+  },
+});
+
+const Navigation = createStaticNavigation(rootStack)
 
 const styles = StyleSheet.create({
 
