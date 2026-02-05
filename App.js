@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, TouchableOpacity, Modal, TextInput } fr
 import {createStaticNavigation, useNavigation} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React from 'react';
 
 export default function App() {
   return <Navigation/>;
@@ -22,12 +23,16 @@ const navigation = useNavigation()
 }
 
 function doubt(){
+  const inputDoubt = React.useState('')
+
   return(
     <View>
         <Text>Add your doubt here:</Text>
         <TextInput></TextInput>
         <Button
-          
+          title = "Commit doubt"
+          onChangeText={inputDoubt}
+          onPress={storeData}
         />
     </View>
   )
@@ -40,6 +45,17 @@ const storeData = async (value) => {
 
   }
 };
+
+const getData = async () => {
+  try{
+    const value = await AsyncStorage.getItem('my-key');
+    if (value != null){
+
+    }
+  } catch(e){
+
+  }
+}
 
 const rootStack = createNativeStackNavigator({
   initialRouteName: 'Start',
