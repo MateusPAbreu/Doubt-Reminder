@@ -13,6 +13,10 @@ function start(){
 const navigation = useNavigation()
 
   return (
+    <View>
+      <Text>{getData}</Text>  
+    </View>,
+
     <View style={styles.addDoubt}>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Doubt')}>
         <Text style={styles.buttonText}>+</Text>
@@ -32,22 +36,37 @@ function doubt(){
         <Button
           title = "Commit doubt"
           onChangeText={inputDoubt}
-          onPress={storeData}
+          onPress={saveInfo}
         />
+    </View>,
+    <View>
+      <Text>{}</Text>
     </View>
   )
 }
 
-const storeData = async (value) => {
+//Saving the data
+const storeData = async (input) => {
   try{
-    await AsyncStorage.setItem('my-key', value);
+    await AsyncStorage.setItem('my-key', input);
+    Alert('Saved!');
   } catch(e){
-
+    console.warn(e);
   }
 };
 
+//Function to press the button and then pass the data to storeData
+const saveInfo = async (input) =>{
+  if (input != null){
+    await this.storeData(this.input);
+  } else {
+    Alert("Try Again");
+  }
+}
+
 const getData = async () => {
   try{
+    
     const value = await AsyncStorage.getItem('my-key');
     if (value != null){
 
