@@ -19,7 +19,7 @@ function start() {
 
 //nothing above this shows up because it is absolute, fix that later
     <View style={styles.addDoubt}> 
- 
+      <Text>{getData}</Text>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Doubt')}>
         <Text style={styles.buttonText}>+</Text>
@@ -41,25 +41,25 @@ function doubt() {
       <TextInput  onChangeText={setDoubt}></TextInput>
       <Button
         title="Commit doubt"
-        onPress={storeData}//the button will take the state and save it to the first page
+        onPress={() => storeData({doubt})}//the button will take the state and save it to the first page
       />
-      <Text>{doubt}</Text>
+      {/* <Text>{doubt}</Text> */}
     </View>
   )
 }
 
-function userDoubt({ title, children }) {
-  // const [doubt, doubtRem] = 
-  <section>
-    <h3>{title}</h3>
-    <Text>{children}</Text>
-  </section>
-}
+// function userDoubt({ title, children }) {
+//   // const [doubt, doubtRem] = 
+//   <section>
+//     <h3>{title}</h3>
+//     <Text>{children}</Text>
+//   </section>
+// }
 
 //Saving the data
 const storeData = async (input) => {
   try {
-    await AsyncStorage.setItem('my-key', a);
+    await AsyncStorage.setItem('my-key', input);
     Alert('Saved!');
   } catch (e) {
     console.warn(e);
@@ -83,7 +83,7 @@ const getData = async () => {
       a = value;//I think I can get the idea, to put something, some constant/function here to save the value that will be called above
     }
   } catch (e) {
-
+    console.warn(e);
   }
 }
 
