@@ -1,23 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Modal, TextInput } from 'react-native';
-import {createStaticNavigation, useNavigation} from '@react-navigation/native';
+import { createStaticNavigation, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 
 export default function App() {
-  return <Navigation/>;
+  return <Navigation />;
 }
 
-function start(){
-const navigation = useNavigation()
+let a = "Test"
+
+function start() {
+  const navigation = useNavigation()
 
   return (
-    <View>
-      <Text>{getData}</Text>  
-    </View>,
 
-    <View style={styles.addDoubt}>
+
+//nothing above this shows up because it is absolute, fix that later
+    <View style={styles.addDoubt}> 
+ 
+
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Doubt')}>
         <Text style={styles.buttonText}>+</Text>
         {/* <Link screen="Doubt">Add doubt</Link> */}
@@ -26,38 +29,46 @@ const navigation = useNavigation()
   );
 }
 
-function doubt(){
-  const inputDoubt = React.useState('')
+function doubt() {
+  const [doubt, setDoubt] = React.useState('') //should I make this global?
+  const inputDoubt = (input) =>{
+    setDoubt(input)
+  }
 
-  return(
+  return (
     <View>
-        <Text>Add your doubt here:</Text>
-        <TextInput></TextInput>
-        <Button
-          title = "Commit doubt"
-          onChangeText={inputDoubt}
-          onPress={saveInfo}
-        />
-    </View>,
-    <View>
-      <Text>{}</Text>
+      <Text>Add your doubt here:</Text>
+      <TextInput  onChangeText={setDoubt}></TextInput>
+      <Button
+        title="Commit doubt"
+        onPress={storeData}//the button will take the state and save it to the first page
+      />
+      <Text>{doubt}</Text>
     </View>
   )
 }
 
+function userDoubt({ title, children }) {
+  // const [doubt, doubtRem] = 
+  <section>
+    <h3>{title}</h3>
+    <Text>{children}</Text>
+  </section>
+}
+
 //Saving the data
 const storeData = async (input) => {
-  try{
-    await AsyncStorage.setItem('my-key', input);
+  try {
+    await AsyncStorage.setItem('my-key', a);
     Alert('Saved!');
-  } catch(e){
+  } catch (e) {
     console.warn(e);
   }
 };
 
 //Function to press the button and then pass the data to storeData
-const saveInfo = async (input) =>{
-  if (input != null){
+const saveInfo = async (input) => {
+  if (input != null) {
     await this.storeData(this.input);
   } else {
     Alert("Try Again");
@@ -65,13 +76,13 @@ const saveInfo = async (input) =>{
 }
 
 const getData = async () => {
-  try{
-    
-    const value = await AsyncStorage.getItem('my-key');
-    if (value != null){
+  try {
 
+    const value = await AsyncStorage.getItem('my-key');
+    if (value != null) {
+      a = value;//I think I can get the idea, to put something, some constant/function here to save the value that will be called above
     }
-  } catch(e){
+  } catch (e) {
 
   }
 }
@@ -88,7 +99,7 @@ const Navigation = createStaticNavigation(rootStack)
 
 const styles = StyleSheet.create({
 
-  addDoubt:{
+  addDoubt: {
     position: 'absolute',
     bottom: 100,         // Distance from the bottom of the screen
     left: 0,
@@ -97,13 +108,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  button:{
+  button: {
     borderWidth: 10,
     borderColor: "yellow",
     // width: 120
   },
 
-  buttonText:{
+  buttonText: {
     fontSize: 120,
     alignItems: 'center', // Centers the content horizontally
     justifyContent: 'center',
